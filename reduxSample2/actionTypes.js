@@ -4,3 +4,5 @@ export const ITEMS_FETCH_DATA_SUCCESS = 'ITEMS_FETCH_DATA_SUCCESS';
 export const ITEMS_GET_ID = 'ITEMS_GET_ID';
 export const SAVE_ITEM = 'SAVE';
 export const GET_ITEM = 'GET';
+export const INTERNET_CHANGE = 'INTERNET';
+export const GET_DATA_FROM_CACHE = 'OFFLINE DATA';

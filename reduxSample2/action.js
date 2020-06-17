@@ -1,5 +1,6 @@
 import * as actions from './actionTypes';
 import { act } from 'react-test-renderer'
+import { NetInfo } from 'react-native';
 
 
  export const itemHasErrored = bool =>{
@@ -38,6 +39,17 @@ export const getLogin = () => {
          
      }
 }
+export const changeStatusInternet = (isConnected) =>{
+    return{
+        type: actions.INTERNET_CHANGE,
+        status: isConnected,
+    }
+}
+export const getDataFromCache = () => {
+    return{
+        type: actions.GET_DATA_FROM_CACHE,
+    }
+}
 // export function errorAfterFiveSeconds(){
 //     return(dispatch) => {
 //         setTimeout(() => {
@@ -73,4 +85,9 @@ export function getDetailsById(id){
     return(dispatch)=>{
             dispatch(itemGetid(id));
     }
+}
+export function getData(){
+    return(dispatch)=>{
+        dispatch(getDataFromCache());
+}
 }

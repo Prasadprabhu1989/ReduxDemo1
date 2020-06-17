@@ -11,12 +11,7 @@ import authReducer from './loginReducer';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist :[
-        'auth',
-    ],
-    blacklist:[
-        'normal',
-    ]
+  whitelist: ['auth', 'normal'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

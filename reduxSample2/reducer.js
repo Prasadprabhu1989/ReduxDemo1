@@ -32,18 +32,20 @@ export default function reducer(state = initialState, action) {
         return {
             ...state,
             isLoading: action.isLoading,
+            
             // hasErrored: action.hasErrored
 
         }
     }
     else if(action.type == actions.ITEMS_FETCH_DATA_SUCCESS){
-        // console.log("Action items: ", action.items);
+        console.log("Action items: ", action.items);
 
 
         return{
             ...state,
-            // isLoading: true,
+            isLoading: false,
             lists: action.items,
+            hasErrored: false,
         }
     }
     else if(action.type == actions.ITEMS_GET_ID){
@@ -56,6 +58,13 @@ export default function reducer(state = initialState, action) {
                 item.id == action.id
             )
 
+        }
+    }
+    else if(action.type == actions.GET_DATA_FROM_CACHE){
+        console.log("Action id: ", action.id);
+        return{
+            state,
+            // lists: state,
         }
     }
     return state;

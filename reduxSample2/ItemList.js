@@ -3,18 +3,43 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from './store';
 import { ActivityIndicator, View, Text, FlatList, TouchableOpacity, SafeAreaView, Button } from 'react-native';
-import {itemsFetchData, saveLogin} from './action';
+import NetInfo from '@react-native-community/netinfo';
+import {itemsFetchData, saveLogin, getData} from './action';
 
 
 class ItemList extends Component{
     componentDidMount(){
+        // unsubscribe();
+        console.log("Component did mount");
+        NetInfo.fetch().then(
+            state => {
+                console.log("Connection type", state.type);
+        console.log("Is connected?", state.isConnected);
         
-        console.log("Component did mount")
+            this.retrieveData(state.isConnected);
+    })
+    // const unsubscribe = NetInfo.addEventListener(state => {
+    //     console.log("Connection type", state.type);
+    //     console.log("Is connected?", state.isConnected);
+
+
+
+    // })
         // let s = store.getState()
         // console.log("Stor objects:",s);
-this.props.fetchdata('https://jsonplaceholder.typicode.com/todos')
-    }
 
+    }
+     retrieveData = (isConnected) => {
+        if(isConnected){
+            this.props.fetchdata('https://jsonplaceholder.typicode.com/todos');
+        }
+        else{
+            console.log('disconnected');
+            // this.props.getDataFromCache();
+            let s = store.getState();
+            console.log(s);
+        }
+    }
     render(){
 
         let lists = this.props.lists
@@ -38,9 +63,7 @@ this.props.fetchdata('https://jsonplaceholder.typicode.com/todos')
                 )
             }
             return(
-                // <SafeAreaView style={{
-                //     backgroundColor:'red'
-                // }}>
+               
                 <View style= {{
                     flex: 1,
                     justifyContent: 'center',
@@ -57,23 +80,19 @@ this.props.fetchdata('https://jsonplaceholder.typicode.com/todos')
 
                 }}
                 onPress = {() => navigate('DetailScreen', 
-                
                 {
                     itemid: item.id,
                     otherParam: 'Pass whatever you want here',
                     
                     
-                })}
-                 
-                >
+                })}>
 
                     <Text style={{
                         fontSize: 30
                     }}>{item.title}</Text>
                 </TouchableOpacity>
             )}>
-
-                {/* {this.props.lists.map(item => 
+          {/* {this.props.lists.map(item => 
 
                     <Text key={item.id}>{item.title}</Text>
                 )} */}
@@ -93,11 +112,11 @@ this.props.fetchdata('https://jsonplaceholder.typicode.com/todos')
 
 
 const mapStateToProps = (state) => {
-    console.log('isloading ',state.isLoading);
+    console.log('isloading ',state.normal.isLoading);
 
    
     // console.log('lists ',state.lists);
-    console.log('haserored ',state.hasErrored);
+    console.log('haserored ',state.normal.hasErrored);
     return{
         lists: state.normal.lists,
         hasErrored: state.normal.hasErrored,
@@ -107,7 +126,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return{
         fetchdata: (url) => dispatch(itemsFetchData(url)),
-        saveLogins: (bool) => dispatch(saveLogin(bool))
+        saveLogins: (bool) => dispatch(saveLogin(bool)),
+    getDataFromCache: () => dispatch(getData()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

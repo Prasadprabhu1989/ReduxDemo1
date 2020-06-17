@@ -6,7 +6,7 @@ import { combineReducers } from 'redux';
 const rootReducer = combineReducers(
     {
      auth: authReducer,
-      normal: reducer
+      normal: reducer,
         
     }
 )
