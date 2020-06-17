@@ -14,9 +14,17 @@ import { connect } from 'react-redux';
 
 
         const itemId = this.props.route.params.itemid;
+        let test = this.props.route.params.test;
          console.log(itemId);
+         this.setState({
+             itemIds: itemId
+         })
         this.props.getDetails(itemId);
+        test = "HI"
 
+    }
+    state = {
+        itemIds : 0
     }
     render(){
         // const itemId = this.props.navigation.itemId;
@@ -33,9 +41,10 @@ import { connect } from 'react-redux';
                 {this.props.items.map(obj =>
                     <Text>{obj.title}</Text>
                 )}
+
                 </>
             }
-            <Text></Text></View>
+            <Text>{this.state.itemIds}</Text></View>
         )
     }
 }

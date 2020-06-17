@@ -18,6 +18,7 @@ class ItemList extends Component{
         
             this.retrieveData(state.isConnected);
     })
+    
     // const unsubscribe = NetInfo.addEventListener(state => {
     //     console.log("Connection type", state.type);
     //     console.log("Is connected?", state.isConnected);
@@ -28,6 +29,9 @@ class ItemList extends Component{
         // let s = store.getState()
         // console.log("Stor objects:",s);
 
+    }
+    state = {
+        test: 'Test123',
     }
      retrieveData = (isConnected) => {
         if(isConnected){
@@ -46,6 +50,17 @@ class ItemList extends Component{
         const { navigate } = this.props.navigation;
      
 
+        //after getting response navigate to next screen
+            // if(this.props.isResponse){
+            //     navigate('DetailScreen', 
+            //     {
+            //         itemid: 2,
+            //         test: this.state.test,
+            //         // otherParam: 'Pass whatever you want here',
+                    
+                    
+            //     })
+            // }
 
             if (this.props.hasErrored){
                 return (<View style={{
@@ -82,7 +97,8 @@ class ItemList extends Component{
                 onPress = {() => navigate('DetailScreen', 
                 {
                     itemid: item.id,
-                    otherParam: 'Pass whatever you want here',
+                    test: this.state.test,
+                    // otherParam: 'Pass whatever you want here',
                     
                     
                 })}>
@@ -98,6 +114,7 @@ class ItemList extends Component{
                 )} */}
                 </FlatList>
                 <Button title="Save" onPress={() =>this.clickLogin()}></Button>
+                <Text>{this.state.test}</Text>
                 </View>
                 // </SafeAreaView>
             )
@@ -120,7 +137,8 @@ const mapStateToProps = (state) => {
     return{
         lists: state.normal.lists,
         hasErrored: state.normal.hasErrored,
-        isLoading: state.normal.isLoading
+        isLoading: state.normal.isLoading,
+        isResponse: true,
     }
 }
 const mapDispatchToProps = (dispatch) => {
